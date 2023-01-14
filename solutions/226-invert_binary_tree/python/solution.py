@@ -1,7 +1,7 @@
 """ 226. Invert Binary Tree
     Author: Artur Gasparyan
     Date: 14 Jan 2023
-    Link: https://leetcode.com/problems/invert-binary-tree/submissions/877942536/
+    Link: https://leetcode.com/problems/invert-binary-tree/submissions/877946486/
 """
 
 # Definition for a binary tree node.
@@ -10,29 +10,19 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if root:
-            stack = [root]
-        else:
-            stack = []
+        stack = [root] if root else None
 
         while stack:
             node = stack.pop()
+            node.left, node.right = node.right, node.left
+
             if node.left:
                 stack.append(node.left)
-                if node.right:
-                    stack.append(node.right)
-                    node.left = stack[-1]
-                    node.right = stack[-2]
-                else:
-                    node.right = node.left
-                    node.left = None
-
-            else:
-                if node.right:
-                    stack.append(node.right)
-                    node.left = node.right
-                    node.right = None
+            
+            if node.right:
+                stack.append(node.right)
 
         return root
